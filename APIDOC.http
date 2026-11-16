@@ -5,10 +5,10 @@ POST http://127.0.0.1:8000/accounts/register/
 Content-Type: application/json
 
 {
-    "username":"abhishek",
-    "email":"abhishek@gmail.com",
-    "password":"abhishek@123",
-    "phone":"9497328668",
+    "username":"abinandha",
+    "email":"abinandha@gmail.com",
+    "password":"password@123",
+    "phone":"9072286285",
     "dob":"2005-12-07"
 }
 
@@ -31,3 +31,33 @@ Authorization: Basic abhishek:abhishek@123
     "amount":200
     
 }
+
+#api call ffor retrieving an expense
+###
+GET http://127.0.0.1:8000/expenses/1/
+Accept: application/json
+Authorization: Basic abinandha:password@123
+
+#api call for updating an expense
+###
+PUT http://127.0.0.1:8000/expenses/1/
+Content-Type: application/json
+Authorization: Basic abhishek:abhishek@123
+
+{
+  "id": 1,
+  "title": "biriyani",
+  "category": "food",
+  "amount": 200,
+  "description": "super biriryani !",
+  "payment_method": "upi",
+  "bill_image": null,
+  "created_at": "2026-11-12T06:25:40.369080Z",
+  "owner": 1
+}
+
+#api call for deleting an expense
+###
+DELETE http://127.0.0.1:8000/expenses/1/
+Accept: application/json
+Authorization: Basic abhishek:abhishek@123
