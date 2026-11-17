@@ -10,7 +10,9 @@ from transactions.serializers import ExpenseSerializer
 
 class ExpenseListCreateView(APIView):
     
-    authentication_classes = [authentication.BasicAuthentication]
+    #authentication_classes = [authentication.BasicAuthentication]
+    
+    authentication_classes=[authentication.TokenAuthentication]
     
     permission_classes = [permissions.IsAuthenticated]
     
@@ -44,7 +46,9 @@ from transactions.permissions import IsOwner
         
 class ExpenseRetreiveUpdateDeleteView(APIView):
     
-    authentication_classes = [authentication.BasicAuthentication]
+    #authentication_classes = [authentication.BasicAuthentication]
+    
+    authentication_classes=[authentication.TokenAuthentication]
     
     permission_classes = [IsOwner]
     
@@ -86,22 +90,32 @@ from django.db.models import Sum
     
 class ExpenseSummaryView(APIView):
     
-    authentication_classes = [authentication.BasicAuthentication]
+    # authentication_classes = [authentication.BasicAuthentication]
+    authentication_classes=[authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     
     def get(self,request):
         
-        auth_user_expenses = Expense.objects.filter(id=request.user)
+        auth_user_expenses = Expense.objects.filter(owner=request.user)
         
         response_data = {
             "todays_total":0,
             "monthly_total":0
         }
         
+        #todays
         cur_date = datetime.today().date()
         
         todays_total = auth_user_expenses.filter(created_at__date = cur_date).values("amount").aggregate(total=Sum("amount")).get("total")
         
         response_data["todays_total"] = todays_total
+        
+        #monthly
+        cur_month = datetime.today().month
+        cur_year = datetime.today().year
+        
+        monthly_total = auth_user_expenses.filter(created_at__month=cur_month,created_at__year=cur_year).values("amount").aggregate(total=Sum("amount")).get("total")
+        
+        response_data["monthly_total"]=monthly_total
         
         return Response(response_data)
