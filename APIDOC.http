@@ -19,8 +19,8 @@ POST http://127.0.0.1:8000/token/
 Content-Type: application/json
 
 {
-    "username":"abinandha",
-    "password":"password@123"
+    "username":"abhishek",
+    "password":"abhishek@123"
 }
 
 #====================== Expense =================================
@@ -34,11 +34,11 @@ Authorization: Token be43c0a856e602adead7751cb922b49848f3d9ed
 ###
 POST http://127.0.0.1:8000/expenses/
 Content-Type: application/json
-Authorization: Token 736ce3bac5a2d9c9906efa32a5f5f516ec189e8e
+Authorization: Token be43c0a856e602adead7751cb922b49848f3d9ed
 
 {
-    "title":"idli",
-    "category":"food",
+    "title":"movie",
+    "category":"entertainment",
     "amount":200
     
 }
